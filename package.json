@@ -1,0 +1,20 @@
+{
+  "name": "connect-to-blood-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitue/connect-to-blood-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bitue/connect-to-blood-server/issues"
+  },
+  "homepage": "https://github.com/bitue/connect-to-blood-server#readme"
+}
