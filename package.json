@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/bitue/connect-to-blood-server/issues"
   },
-  "homepage": "https://github.com/bitue/connect-to-blood-server#readme"
+  "homepage": "https://github.com/bitue/connect-to-blood-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "mongoose": "^6.9.1"
+  }
 }
