@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const admin = express();
 const cors = require('cors');
+const { UserM } = require('./model/userModel');
 
 // internal module imports
 
@@ -20,7 +21,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/user', async (req, res) => {
-    res.send('user');
+    const u = req.body;
+    console.log(u);
+
+    const user = new UserM(u);
+    await user.save();
+    res.send('user created success');
 });
 
 // not found any route error : 404
