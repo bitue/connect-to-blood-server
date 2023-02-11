@@ -1,57 +1,48 @@
 const mongoose = require('mongoose');
 
-// const userSchema = new mongoose.Schema(
-//     {
-//         email: {
-//             type: String,
-//             trim: true,
-//             min: [6, 'valid email address needed !'],
-//             required: [true, 'Email address is required '],
-//             unique: true
-//         },
-//         password: {
-//             type: String,
-//             min: [6, 'password should be minimum 6 length'],
-//             required: true
-//         },
-//         phone: {
-//             type: String,
-//             required: true,
-//             unique: [true, 'Phone number is already used !']
-//         },
-//         role: {
-//             type: String,
-//             enum: ['Admin', 'User', 'Donar'],
-//             required: [true, 'role is required']
-//         },
-//         location: {
-//             type: String,
-//             required: true,
-//             unique: [true, 'Location is required !']
-//         },
-//         NID: {
-//             type: String,
-//             required: true,
-//             min: [10, 'Invalid Nid']
-//         }
-//     },
-//     { timestamps: true }
-// );
-
-const userM = new mongoose.Schema({
-    email: {
-        type: String,
-        min: [3, 'invalid email'],
-        unique: true
+const userSchema = new mongoose.Schema(
+    {
+        email: {
+            type: String,
+            trim: true,
+            min: [6, 'valid email address needed !'],
+            required: [true, 'Email address is required '],
+            unique: true
+        },
+        password: {
+            type: String,
+            min: [6, 'password should be minimum 6 length'],
+            required: true
+        },
+        phone: {
+            type: String,
+            required: true,
+            unique: [true, 'Phone number is already used !']
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false
+        },
+        role: {
+            type: String,
+            enum: ['user', 'donor'],
+            required: [true, 'role is required']
+        },
+        location: {
+            type: String,
+            required: true,
+            unique: [true, 'Location is required !']
+        },
+        lastDonationDate: Date,
+        bloodType: {
+            type: String,
+            enum: ['A+', 'A-', 'AB+', 'AB-', 'O+', 'O-', 'B+', 'B-'],
+            required: [true, 'You need to add valid blood group ']
+        }
     },
-    password: {
-        type: String,
-        min: [6, 'Min length should be 6']
-    }
-});
+    { timestamps: true }
+);
 
-//const User = mongoose.model('User', userSchema);
-const UserM = mongoose.model('UserM', userM);
-module.exports = {
-    UserM
-};
+const User = mongoose.model('User', userSchema);
+
+module.exports = { User };

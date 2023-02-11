@@ -20,13 +20,17 @@ app.get('/', (req, res) => {
     res.send('home page');
 });
 
-app.post('/user', async (req, res) => {
+app.post('/user', async (req, res, next) => {
     const u = req.body;
-    console.log(u);
+    // console.log(u);
 
-    const user = new UserM(u);
-    await user.save();
-    res.send('user created success');
+    try {
+        const user = new UserM(u);
+        await user.save();
+        res.send('user created success');
+    } catch (err) {
+        next(err);
+    }
 });
 
 // not found any route error : 404
