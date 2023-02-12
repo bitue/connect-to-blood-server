@@ -1,4 +1,0 @@
-authenticate user
-passport 
-jwt 
-session 

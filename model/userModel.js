@@ -19,19 +19,15 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: [true, 'Phone number is already used !']
         },
-        isAdmin: {
-            type: Boolean,
-            default: false
-        },
+
         role: {
             type: String,
-            enum: ['user', 'donor'],
-            required: [true, 'role is required']
+            enum: ['user', 'donor', 'admin'],
+            default: 'user'
         },
         location: {
             type: String,
-            required: true,
-            unique: [true, 'Location is required !']
+            required: [true, 'Location is required !']
         },
         lastDonationDate: Date,
         bloodType: {

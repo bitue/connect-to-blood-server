@@ -1,9 +1,13 @@
 // external module imports
 const express = require('express');
 const app = express();
-const admin = express();
 const cors = require('cors');
-const { UserM } = require('./model/userModel');
+const { userRouter } = require('./routes/userRoutes');
+const { adminRouter } = require('./routes/adminRouter');
+
+// const adminRouter = require('./routes/adminRouter');
+
+require('dotenv').config();
 
 // internal module imports
 
@@ -15,34 +19,31 @@ app.use(express.urlencoded({ extended: true }));
 // case sensitive routing
 app.enable('case sensitive routing');
 
+// public routes
 // home route
 app.get('/', (req, res) => {
-    res.send('home page');
+    res.send('home route');
 });
 
-app.post('/user', async (req, res, next) => {
-    const u = req.body;
-    // console.log(u);
+// user routes
+app.use('/', userRouter);
 
-    try {
-        const user = new UserM(u);
-        await user.save();
-        res.send('user created success');
-    } catch (err) {
-        next(err);
-    }
-});
+// admin routes
+
+app.use('/admin', adminRouter);
 
 // not found any route error : 404
 app.use((req, res, next) => {
     const error = new Error('Not found');
     error.status = 404;
+    console.log('no route found');
     res.send(error);
 });
 
-// final error handling  middleware error : 500
+// final error handling  middl eware error : 500
 
 app.use((err, req, res, next) => {
+    console.log('last middleware');
     res.status(err.status || 500).send(err.message);
 });
 
