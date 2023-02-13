@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const { userRouter } = require('./routes/userRoutes');
 const { adminRouter } = require('./routes/adminRouter');
+const { publicRouter } = require('./routes/publicRouter');
 
 // const adminRouter = require('./routes/adminRouter');
 
@@ -24,6 +25,9 @@ app.enable('case sensitive routing');
 app.get('/', (req, res) => {
     res.send('home route');
 });
+
+// public route
+app.use('/public', publicRouter);
 
 // user routes
 app.use('/', userRouter);

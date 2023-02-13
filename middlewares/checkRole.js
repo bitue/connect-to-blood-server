@@ -1,16 +1,14 @@
 const { roleControllers } = require('../libs/roleControllersSchema');
 
-const checkRole = (req, res, next) => {
-    const { role } = req.headers;
+const checkRole = (authCheck) => (req, res, next) => {
+    const role = req.tokenPayload.role;
+    console.log('chk-role');
+    console.log(role);
 
-    if (!role) {
-        res.sendStatus(401);
+    if (roleControllers[role].includes(authCheck)) {
+        next();
     } else {
-        if (roleControllers[role].includes(role)) {
-            next();
-        } else {
-            res.sendStatus(401);
-        }
+        res.sendStatus(401);
     }
 };
 
