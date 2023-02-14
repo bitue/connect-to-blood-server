@@ -19,24 +19,26 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: [true, 'Phone number is already used !']
         },
+
         role: {
             type: String,
-            enum: ['Admin', 'User', 'Donar'],
-            required: [true, 'role is required']
+            enum: ['user', 'donor', 'admin'],
+            default: 'user'
         },
         location: {
             type: String,
-            required: true,
-            unique: [true, 'Location is required !']
+            required: [true, 'Location is required !']
         },
-        NID: {
+        lastDonationDate: Date,
+        bloodType: {
             type: String,
-            required: true,
-            min: [10, 'Invalid Nid']
+            enum: ['A+', 'A-', 'AB+', 'AB-', 'O+', 'O-', 'B+', 'B-'],
+            required: [true, 'You need to add valid blood group ']
         }
     },
     { timestamps: true }
 );
 
 const User = mongoose.model('User', userSchema);
-module.exports = User;
+
+module.exports = { User };
