@@ -1,7 +1,7 @@
 const roleControllers = {
-    admin: ['admin', 'user', 'donor'],
+    admin: ['admin'],
     donor: ['donor', 'user'],
-    user: ['user']
+    user: ['user', 'donor', 'admin']
 };
 
 module.exports = {

@@ -146,8 +146,22 @@ const deleteBlog = async (req, res, next) => {
         // get the blog id from req body
         const { blog_id } = req.body;
         console.log(blog_id);
-        // search the blog then update it
-        const blogDB = await Blog.deleteOne({ _id: blog_id });
+        const blog = await Blog.findById(blog_id);
+
+        // blog->role
+        // blog is null
+        let blogDB;
+        if (!blog) {
+            res.sendStatus(404);
+        }
+
+        if (blog.user === req.tokenPayload._id) {
+            blogDB = await Blog.deleteOne({ _id: blog_id });
+        } else if (req.tokenPayload.role === 'admin') {
+            blogDB = await Blog.deleteOne({ _id: blog_id });
+        } else {
+            res.sendStatus(401);
+        }
         res.json(blogDB);
     } catch (err) {
         next(err);

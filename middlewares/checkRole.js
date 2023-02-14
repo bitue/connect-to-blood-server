@@ -5,7 +5,7 @@ const checkRole = (authCheck) => (req, res, next) => {
     console.log('chk-role');
     console.log(role);
 
-    if (roleControllers[role].includes(authCheck)) {
+    if (roleControllers[authCheck].includes(role)) {
         next();
     } else {
         res.sendStatus(401);
