@@ -20,7 +20,7 @@ userRouter.get('/protected', checkAuth, userProtected);
 userRouter.post('/createBlog', checkAuth, checkRole('user'), createBlog);
 // do comment by user for a blog
 userRouter.post('/comment', checkAuth, checkRole('user'), createComment);
-// do like by user
+// do vote and unvote  by user
 userRouter.get('/vote', checkAuth, checkRole('user'), giveVote);
 // user can delete post by id
 userRouter.delete('/deleteBlog', checkAuth, checkRole('user'), deleteBlog);
