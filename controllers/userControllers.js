@@ -85,6 +85,11 @@ const userProtected = (req, res, next) => {
 
 const createBlog = async (req, res, next) => {
     try {
+        // check the token payload and req body userID
+        if (req.body.user !== req.tokenPayload._id.toString()) {
+            res.sendStatus(401);
+        }
+        console.log(req.body.user == req.tokenPayload._id.toString());
         const blog = new Blog({ ...req.body });
 
         const blogDB = await blog.save();
