@@ -1,20 +1,10 @@
 const express = require('express');
-const { Blog } = require('../model/blogModel');
+const { getBlogs, getBlogById } = require('../controllers/publicController');
 
 const publicRouter = express.Router();
 
-publicRouter.get('/getBlogs', async (req, res) => {
-    try {
-        const blogs = await Blog.find().populate(['user', 'comments']).limit(10);
-        // console.log(blogs);
-        res.json({
-            data: blogs,
-            status: 'ok'
-        });
-    } catch (err) {
-        res.status(403).send(err.message);
-    }
-});
+publicRouter.get('/getBlogs', getBlogs);
+publicRouter.get('/getBlogById', getBlogById);
 
 module.exports = {
     publicRouter

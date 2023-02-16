@@ -109,6 +109,7 @@ const createComment = async (req, res, next) => {
         const commentDB = await comment.save();
         // need to push it the blog
         const blog_id = commentDB.blog;
+        console.log(req.tokenPayload);
         const addComment = await Blog.updateOne(
             { _id: blog_id },
             { $push: { comments: commentDB._id } }
@@ -159,12 +160,15 @@ const deleteBlog = async (req, res, next) => {
         if (!blog) {
             res.sendStatus(404);
         }
+        console.log(blog.user, req.tokenPayload._id);
 
-        if (blog.user === req.tokenPayload._id) {
+        if (blog.user.toString() === req.tokenPayload._id.toString()) {
             blogDB = await Blog.deleteOne({ _id: blog_id });
         } else if (req.tokenPayload.role === 'admin') {
             blogDB = await Blog.deleteOne({ _id: blog_id });
         } else {
+            // blogDB = await Blog.deleteOne({ _id: blog_id });
+            // res.json(blogDB);
             res.sendStatus(401);
         }
         res.json(blogDB);
