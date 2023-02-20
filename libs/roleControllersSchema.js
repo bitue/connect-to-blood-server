@@ -1,6 +1,6 @@
 const roleControllers = {
     admin: ['admin'],
-    donor: ['donor', 'user'],
+    donor: ['donor', 'admin'],
     user: ['user', 'donor', 'admin']
 };
 
