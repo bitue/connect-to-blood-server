@@ -21,8 +21,9 @@ const signUp = async (req, res, next) => {
         const token = JWT.sign(tokenPayload, process.env.JWT_SECRET, {
             expiresIn: '10d'
         });
+        res.set('Access-Control-Expose-Headers', 'Authorization');
         // authorization  headers  client response  has token
-        res.set('authorization-token', token);
+        res.set('Authorization', token);
 
         res.json({
             message: 'user created success',
@@ -51,9 +52,11 @@ const signIn = async (req, res, next) => {
                 );
 
                 //console.log(token);
+                res.set('Access-Control-Expose-Headers', 'Authorization');
 
                 // token add to res header
-                res.set('authorization-token', token);
+                res.set('Authorization', token);
+                //res.set('authToken', token);
                 res.json({
                     user: dbUser,
                     status: 'ok'

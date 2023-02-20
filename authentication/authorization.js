@@ -9,7 +9,7 @@ const checkAuth = async (req, res, next) => {
         res.status(401).send('Unauthorized 1 !');
     } else {
         try {
-            console.log(authorization);
+            // console.log(authorization);
             const token = authorization.split(' ')[1];
 
             const decode = JWT.verify(token, process.env.JWT_SECRET);
@@ -20,7 +20,7 @@ const checkAuth = async (req, res, next) => {
                 $and: [{ email: decode.email }, { role: decode.role }, { _id: decode.id }]
             });
             console.log(userDb, 'userDB');
-
+            // if user not found in database
             if (!userDb) {
                 res.status(401).send('Unauthorized 2 !');
             }

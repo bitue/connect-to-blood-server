@@ -13,7 +13,7 @@ const { checkRole } = require('../middlewares/checkRole');
 const userRouter = express.Router();
 
 // sign up by any user
-userRouter.post('/signup', signUp);
+userRouter.post('/signup', signUp); 
 userRouter.post('/signin', signIn);
 userRouter.get('/protected', checkAuth, userProtected);
 // create blogs by user
