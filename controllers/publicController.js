@@ -16,11 +16,12 @@ const getBlogs = async (req, res) => {
     }
 };
 
-// get blogs by id :
+// get blog by id :
 
-const getBlogById = async (req, res, next) => {
+const getBlogByBlogId = async (req, res, next) => {
     try {
         const id = req.query.id;
+        console.log(id);
         const blogDB = await Blog.findById(id).populate(['user', 'comments']);
 
         // if(!blogDB){
@@ -40,5 +41,5 @@ const getBlogById = async (req, res, next) => {
 
 module.exports = {
     getBlogs,
-    getBlogById
+    getBlogByBlogId
 };

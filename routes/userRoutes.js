@@ -1,5 +1,6 @@
 const express = require('express');
 const { checkAuth } = require('../authentication/authorization');
+
 const {
     signUp,
     signIn,
@@ -7,13 +8,14 @@ const {
     createBlog,
     createComment,
     giveVote,
-    deleteBlog
+    deleteBlog,
+    getBlogsByUserId
 } = require('../controllers/userControllers');
 const { checkRole } = require('../middlewares/checkRole');
 const userRouter = express.Router();
 
 // sign up by any user
-userRouter.post('/signup', signUp); 
+userRouter.post('/signup', signUp);
 userRouter.post('/signin', signIn);
 userRouter.get('/protected', checkAuth, userProtected);
 // create blogs by user
@@ -24,6 +26,10 @@ userRouter.post('/comment', checkAuth, checkRole('user'), createComment);
 userRouter.get('/vote', checkAuth, checkRole('user'), giveVote);
 // user can delete post by id
 userRouter.delete('/deleteBlog', checkAuth, checkRole('user'), deleteBlog);
+// user can get details by  the blogID
+// already have public route
+// user can get all his id by userId
+userRouter.get('/getBlogsByUserId', checkAuth, checkRole('user'), getBlogsByUserId);
 
 module.exports = {
     userRouter

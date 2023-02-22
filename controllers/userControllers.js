@@ -180,6 +180,68 @@ const deleteBlog = async (req, res, next) => {
     }
 };
 
+// const getBlogByBlogId = async (req, res, next) => {
+//     try {
+//         const id = req.query.id;
+//         console.log(id);
+//         const blogDB = await Blog.findById(id).populate(['user', 'comments']);
+
+//         // if(!blogDB){
+//         //     res.send({
+//         //         message : "No blog found"
+//         //     }).status(200)
+
+//         // }
+//         // console.log(blogDB);
+//         res.json({
+//             data: blogDB
+//         });
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+const getBlogsByUserId = async (req, res, next) => {
+    try {
+        let blogDB;
+        const id = req.query.id;
+        console.log(id);
+
+        if (id === req.tokenPayload._id.toString()) {
+            blogDB = await Blog.find({ user: id }).populate(['user', 'comments']);
+            console.log('===');
+            res.json(blogDB);
+        } else {
+            if (req.tokenPayload.role == 'admin') {
+                blogDB = await Blog.find({ user: id }).populate(['user', 'comments']);
+                console.log('admin');
+                res.json(blogDB);
+            } else {
+                res.sendStatus(403);
+            }
+        }
+
+        // if (id !== req.tokenPayload._id.toString()) {
+        //     // user != admin user == user admin ==admin user user
+        //     if (req.tokenPayload.role == 'admin') {
+        //         // get the blogs by admin power
+        //         blogDB = await Blog.find({ user: id }).populate(['user', 'comments']);
+        //         console.log(blogDB);
+        //         res.json(blogDB);
+        //     } else {
+        //         res.sendStatus(403);
+        //     }
+        // } else {
+        //     // user == user  admin == admin
+        //     blogDB = await Blog.find({ user: id }).populate(['user', 'comments']);
+        //     console.log(blogDB);
+        //     res.json(blogDB);
+        // }
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     signUp,
     signIn,
@@ -187,5 +249,6 @@ module.exports = {
     createBlog,
     createComment,
     giveVote,
-    deleteBlog
+    deleteBlog,
+    getBlogsByUserId
 };
