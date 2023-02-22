@@ -4,7 +4,6 @@ const blogSchema = new mongoose.Schema(
     {
         title: {
             type: String,
-
             min: [100, 'title must be 100 characters!'],
             required: [true, 'title is required ']
         },

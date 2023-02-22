@@ -1,8 +1,10 @@
 const bcrypt = require('bcrypt');
 const { User } = require('../model/userModel');
+
 const JWT = require('jsonwebtoken');
 const { Blog } = require('../model/blogModel');
 const { Comment } = require('../model/comentModel');
+const { DonorHealth } = require('../model/donorHealthModel');
 require('dotenv').config();
 
 const signUp = async (req, res, next) => {
@@ -161,7 +163,7 @@ const deleteBlog = async (req, res, next) => {
         // blog is null
         let blogDB;
         if (!blog) {
-            res.sendStatus(404);
+            res.sendStatus(403);
         }
         console.log(blog.user, req.tokenPayload._id);
 
@@ -212,7 +214,7 @@ const getBlogsByUserId = async (req, res, next) => {
             console.log('===');
             res.json(blogDB);
         } else {
-            if (req.tokenPayload.role == 'admin') {
+            if (req.tokenPayload.role === 'admin') {
                 blogDB = await Blog.find({ user: id }).populate(['user', 'comments']);
                 console.log('admin');
                 res.json(blogDB);
@@ -242,6 +244,29 @@ const getBlogsByUserId = async (req, res, next) => {
     }
 };
 
+// user can req for being donor
+const DonorHealthStatus = async (req, res, next) => {
+    // get the status from req.body ;
+    try {
+        const donorStatus = req.body;
+        console.log(donorStatus);
+        const { password, ...rest } = donorStatus;
+        console.log(password, 'get from user', req.tokenPayload.password);
+        // check the password ;
+        const isValidPassword = await bcrypt.compare(password, req.tokenPayload.password);
+        if (!isValidPassword) {
+            res.sendStatus(403);
+        }
+        const donorHealth = new DonorHealth({ ...rest });
+        const saveDonorHealth = await donorHealth.save();
+        res.send(saveDonorHealth).status(200);
+
+        res.sendStatus(200);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     signUp,
     signIn,
@@ -250,5 +275,7 @@ module.exports = {
     createComment,
     giveVote,
     deleteBlog,
-    getBlogsByUserId
+    getBlogsByUserId,
+    DonorHealthStatus
 };
+// $2b$10$2hdI8KXmo670S3oHlspQOetzshfHnX7n.vjcxhxL6LWk42T2MzQUq

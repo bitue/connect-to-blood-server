@@ -1,4 +1,5 @@
 const { Blog } = require('../model/blogModel');
+const { DonorHealth } = require('../model/donorHealthModel');
 const { User } = require('../model/userModel');
 
 const makeAdmin = async (req, res, next) => {
@@ -42,13 +43,22 @@ const banUserById = async (req, res, next) => {
     }
 };
 
-const getBlogsByUserId = async (req, res, next) => {
+// const getBlogsByUserId = async (req, res, next) => {
+//     try {
+//         const userDB = await Blog.find({ user: req.query.id });
+//         res.json({
+//             data: userDB,
+//             status: 'ok'
+//         });
+//     } catch (err) {
+//         next(err);
+//     }
+// };
+
+const allDonorReq = async (req, res, next) => {
     try {
-        const userDB = await Blog.find({ user: req.query.id });
-        res.json({
-            data: userDB,
-            status: 'ok'
-        });
+        const getAllDonorReq = await DonorHealth.find({}).populate('user');
+        res.json(getAllDonorReq);
     } catch (err) {
         next(err);
     }
@@ -59,5 +69,5 @@ module.exports = {
     getAllUsers,
     getUserById,
     banUserById,
-    getBlogsByUserId
+    allDonorReq
 };

@@ -3,9 +3,11 @@ const { Blog } = require('../model/blogModel');
 // get top 10 latest blogs
 const getBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find({}, {}, { sort: { createdAt: -1 } })
-            .populate(['user', 'comments'])
-            .limit(10);
+        const blogs = await Blog.find({}, {}, { sort: { createdAt: -1 } }).populate([
+            'user',
+            'comments'
+        ]);
+
         // console.log(blogs);
         res.json({
             data: blogs,
