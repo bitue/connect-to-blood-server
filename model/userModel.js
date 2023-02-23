@@ -25,9 +25,9 @@ const userSchema = new mongoose.Schema(
             enum: ['user', 'donor', 'admin'],
             default: 'user'
         },
-        donorStatus: {
+        donorHealth: {
             type: mongoose.SchemaTypes.ObjectId,
-            ref: 'DonorHealthStatus'
+            ref: 'DonorHealth'
         },
 
         location: {

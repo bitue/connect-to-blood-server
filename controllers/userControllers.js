@@ -5,6 +5,7 @@ const JWT = require('jsonwebtoken');
 const { Blog } = require('../model/blogModel');
 const { Comment } = require('../model/comentModel');
 const { DonorHealth } = require('../model/donorHealthModel');
+
 require('dotenv').config();
 
 const signUp = async (req, res, next) => {
@@ -256,12 +257,16 @@ const DonorHealthStatus = async (req, res, next) => {
         const isValidPassword = await bcrypt.compare(password, req.tokenPayload.password);
         if (!isValidPassword) {
             res.sendStatus(403);
+            return;
         }
+        // if (true) {
+        //     res.sendStatus(403);
+        // }
+        console.log(1);
         const donorHealth = new DonorHealth({ ...rest });
+        console.log(2);
         const saveDonorHealth = await donorHealth.save();
         res.send(saveDonorHealth).status(200);
-
-        res.sendStatus(200);
     } catch (err) {
         next(err);
     }

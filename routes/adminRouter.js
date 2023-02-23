@@ -6,7 +6,9 @@ const {
     banUserById,
 
     makeAdmin,
-    allDonorReq
+    allDonorReq,
+    approveDonorReq,
+    getAllDonor
 } = require('../controllers/adminControllers');
 const { checkRole } = require('../middlewares/checkRole');
 const adminRouter = express.Router();
@@ -28,6 +30,10 @@ adminRouter.delete('/banUserById', checkAuth, checkRole('admin'), banUserById);
 adminRouter.put('/makeAdmin', checkAuth, checkRole('admin'), makeAdmin);
 // admin can see all donor req data
 adminRouter.get('/allDonorReq', checkAuth, checkRole('admin'), allDonorReq);
+// admin can approve donor req and make user to donor role and add donorStatus
+adminRouter.put('/approveDonorReq', checkAuth, checkRole('admin'), approveDonorReq);
+// admin can see all donor and health status
+adminRouter.get('/allDonorList', checkAuth, checkRole('admin'), getAllDonor);
 module.exports = {
     adminRouter
 };

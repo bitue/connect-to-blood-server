@@ -1,5 +1,6 @@
 const { Blog } = require('../model/blogModel');
 const { DonorHealth } = require('../model/donorHealthModel');
+
 const { User } = require('../model/userModel');
 
 const makeAdmin = async (req, res, next) => {
@@ -64,10 +65,42 @@ const allDonorReq = async (req, res, next) => {
     }
 };
 
+const approveDonorReq = async (req, res, next) => {
+    try {
+        const { id } = req.query;
+        const donorReq = await DonorHealth.findById(id);
+        console.log(donorReq);
+        if (!donorReq) {
+            res.sendStatus(403);
+        } else {
+            const userId = donorReq.user;
+            console.log(userId, 'donorReq');
+            const resDB = await User.findOneAndUpdate(
+                { _id: userId },
+                { role: 'donor', donorHealth: id }
+            );
+            res.json(resDB);
+        }
+    } catch (err) {
+        next(err);
+    }
+};
+
+const getAllDonor = async (req, res, next) => {
+    try {
+        const getAllDonor = await User.find({ role: 'donor' }).populate('donorHealth');
+        res.json(getAllDonor);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     makeAdmin,
     getAllUsers,
     getUserById,
     banUserById,
-    allDonorReq
+    allDonorReq,
+    approveDonorReq,
+    getAllDonor
 };

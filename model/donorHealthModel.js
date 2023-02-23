@@ -47,6 +47,6 @@ const donorHealthSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const DonorHealth = mongoose.model('DonorHealthStatus', donorHealthSchema);
+const DonorHealth = mongoose.model('DonorHealth', donorHealthSchema);
 
 module.exports = { DonorHealth };
