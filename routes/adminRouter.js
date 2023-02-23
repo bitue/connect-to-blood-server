@@ -8,7 +8,8 @@ const {
     makeAdmin,
     allDonorReq,
     approveDonorReq,
-    getAllDonor
+    getAllDonor,
+    removeDonorReq
 } = require('../controllers/adminControllers');
 const { checkRole } = require('../middlewares/checkRole');
 const adminRouter = express.Router();
@@ -34,6 +35,8 @@ adminRouter.get('/allDonorReq', checkAuth, checkRole('admin'), allDonorReq);
 adminRouter.put('/approveDonorReq', checkAuth, checkRole('admin'), approveDonorReq);
 // admin can see all donor and health status
 adminRouter.get('/allDonorList', checkAuth, checkRole('admin'), getAllDonor);
+//admin can cancel the donor req
+adminRouter.delete('/removeDonorReq', checkAuth, checkRole('admin'), removeDonorReq);
 module.exports = {
     adminRouter
 };

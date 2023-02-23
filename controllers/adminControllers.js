@@ -72,6 +72,7 @@ const approveDonorReq = async (req, res, next) => {
         console.log(donorReq);
         if (!donorReq) {
             res.sendStatus(403);
+            return;
         } else {
             const userId = donorReq.user;
             console.log(userId, 'donorReq');
@@ -79,7 +80,10 @@ const approveDonorReq = async (req, res, next) => {
                 { _id: userId },
                 { role: 'donor', donorHealth: id }
             );
-            res.json(resDB);
+            // get the updated user so
+            const updatedRes = await User.findById(userId);
+            //
+            res.json(updatedRes);
         }
     } catch (err) {
         next(err);
@@ -95,6 +99,18 @@ const getAllDonor = async (req, res, next) => {
     }
 };
 
+const removeDonorReq = async (req, res, next) => {
+    try {
+        console.log(10);
+        const { id } = req.query;
+        const dltReq = await DonorHealth.deleteOne({ _id: id });
+        console.log(dltReq);
+        res.json(dltReq);
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     makeAdmin,
     getAllUsers,
@@ -102,5 +118,6 @@ module.exports = {
     banUserById,
     allDonorReq,
     approveDonorReq,
-    getAllDonor
+    getAllDonor,
+    removeDonorReq
 };
