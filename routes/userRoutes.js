@@ -9,6 +9,8 @@ const {
     createComment,
     giveVote,
     deleteBlog,
+
+    DonorHealthStatus,
     getBlogsByUserId
 } = require('../controllers/userControllers');
 const { checkRole } = require('../middlewares/checkRole');
@@ -30,6 +32,8 @@ userRouter.delete('/deleteBlog', checkAuth, checkRole('user'), deleteBlog);
 // already have public route
 // user can get all his id by userId
 userRouter.get('/getBlogsByUserId', checkAuth, checkRole('user'), getBlogsByUserId);
+// user can give request to admin becoming a donor
+userRouter.post('/donorRequest', checkAuth, checkRole('user'), DonorHealthStatus);
 
 module.exports = {
     userRouter

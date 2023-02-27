@@ -25,11 +25,17 @@ const userSchema = new mongoose.Schema(
             enum: ['user', 'donor', 'admin'],
             default: 'user'
         },
+        donorHealth: {
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: 'DonorHealth'
+        },
+
         location: {
             type: String,
             required: [true, 'Location is required !']
         },
         lastDonationDate: Date,
+
         bloodType: {
             type: String,
             enum: ['A+', 'A-', 'AB+', 'AB-', 'O+', 'O-', 'B+', 'B-'],
