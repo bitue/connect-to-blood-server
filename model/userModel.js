@@ -40,10 +40,23 @@ const userSchema = new mongoose.Schema(
             type: String,
             enum: ['A+', 'A-', 'AB+', 'AB-', 'O+', 'O-', 'B+', 'B-'],
             required: [true, 'You need to add valid blood group ']
+        },
+        location: {
+            type: {
+                type: String,
+                enum: ['Point'],
+                required: true
+            },
+            coordinates: {
+                type: [Number],
+                required: true
+            }
         }
     },
     { timestamps: true }
 );
+
+userSchema.index({ location: '2dsphere' });
 
 const User = mongoose.model('User', userSchema);
 

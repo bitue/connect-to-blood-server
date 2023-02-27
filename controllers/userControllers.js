@@ -12,6 +12,7 @@ const signUp = async (req, res, next) => {
     try {
         const { email, password, role } = req.body;
         console.log(role);
+        console.log(req.body, '---------------');
 
         const hashPassword = await bcrypt.hash(password, 10);
         console.log(hashPassword);
@@ -272,6 +273,49 @@ const DonorHealthStatus = async (req, res, next) => {
     }
 };
 
+// user can search for blood by geolocation api
+const getDonorByMap = async (req, res, next) => {
+    console.log(req.body);
+    const { userLocation, maxDistance } = req.body;
+    try {
+        // Parse the latitude and longitude from the 'near' parameter
+        const { lat, lng } = userLocation;
+
+        // Find donors within the specified distance from the user's location
+        // const donors = await User.find({
+        //     location: {
+        //         $nearSphere: {
+        //             $geometry: {
+        //                 type: 'Point',
+        //                 coordinates: [lng, lat],
+        //                 $minDistance: 0,
+        //                 $maxDistance: maxDistance * 1000
+        //             }
+        //             // Convert from km to meters
+        //         }
+        //     }
+        // });
+
+        const users = await User.find({
+            location: {
+                $near: {
+                    $maxDistance: maxDistance * 1000, // distance in meters
+                    $geometry: {
+                        type: 'Point',
+                        coordinates: [lng, lat]
+                    }
+                }
+            }
+        });
+        console.log(users);
+        // console.log(donors);
+        res.json(users);
+    } catch (err) {
+        console.log(err.message);
+        next(err);
+    }
+};
+
 module.exports = {
     signUp,
     signIn,
@@ -281,6 +325,7 @@ module.exports = {
     giveVote,
     deleteBlog,
     getBlogsByUserId,
-    DonorHealthStatus
+    DonorHealthStatus,
+    getDonorByMap
 };
 // $2b$10$2hdI8KXmo670S3oHlspQOetzshfHnX7n.vjcxhxL6LWk42T2MzQUq
