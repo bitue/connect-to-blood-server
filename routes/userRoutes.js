@@ -11,7 +11,8 @@ const {
     deleteBlog,
 
     DonorHealthStatus,
-    getBlogsByUserId
+    getBlogsByUserId,
+    getDonorByMap
 } = require('../controllers/userControllers');
 const { checkRole } = require('../middlewares/checkRole');
 const userRouter = express.Router();
@@ -34,6 +35,9 @@ userRouter.delete('/deleteBlog', checkAuth, checkRole('user'), deleteBlog);
 userRouter.get('/getBlogsByUserId', checkAuth, checkRole('user'), getBlogsByUserId);
 // user can give request to admin becoming a donor
 userRouter.post('/donorRequest', checkAuth, checkRole('user'), DonorHealthStatus);
+// user can find the blood donor convenient from his area
+// need it to be authN and authZ letter
+userRouter.post('/donorListMap', getDonorByMap);
 
 module.exports = {
     userRouter

@@ -8,7 +8,7 @@ const publicRouter = express.Router();
 publicRouter.get('/getBlogs', getBlogs);
 publicRouter.get('/getBlogByBlogId', getBlogByBlogId);
 publicRouter.get('/getUserByToken', checkAuth, (req, res) => {
-    //console.log(req.tokenPayload, ' token payload');
+    console.log(req.tokenPayload, ' token payload');
     res.json(req.tokenPayload);
 });
 
