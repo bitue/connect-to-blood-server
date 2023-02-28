@@ -28,11 +28,12 @@ const blogSchema = new mongoose.Schema(
                 ref: 'Comment'
             }
         ],
-        likes: {
-            type: Number,
-            default: 0,
-            required: true
-        },
+        likes: [
+            {
+                type: mongoose.SchemaTypes.ObjectId,
+                ref: 'User'
+            }
+        ],
         disLikes: {
             type: Number,
             default: 0,
