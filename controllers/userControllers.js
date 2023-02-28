@@ -276,7 +276,7 @@ const DonorHealthStatus = async (req, res, next) => {
 // user can search for blood by geolocation api
 const getDonorByMap = async (req, res, next) => {
     console.log(req.body);
-    const { userLocation, maxDistance } = req.body;
+    const { userLocation, maxDistance, bloodType } = req.body;
     try {
         // Parse the latitude and longitude from the 'near' parameter
         const { lat, lng } = userLocation;
@@ -305,8 +305,11 @@ const getDonorByMap = async (req, res, next) => {
                         coordinates: [lng, lat]
                     }
                 }
-            }
+            },
+            role: 'donor',
+            bloodType: bloodType
         });
+
         console.log(users);
         // console.log(donors);
         res.json(users);
