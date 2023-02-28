@@ -307,6 +307,7 @@ const getDonorByMap = async (req, res, next) => {
                 }
             }
         });
+
         console.log(users);
         // console.log(donors);
         res.json(users);
