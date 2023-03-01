@@ -131,24 +131,12 @@ const createComment = async (req, res, next) => {
 const giveVote = async (req, res, next) => {
     try {
         // get id by params
-        const { blog_id, like } = req.body;
-        console.log(blog_id);
+        const { user_id, blog_id } = req.body;
+        console.log(user_id, blog_id);
 
-        // search the blog then update it
-        const blogDB = await Blog.findOne({ _id: blog_id });
-        // wrong id
-        console.log(blogDB, 'blog connection');
-        if (!blogDB) {
-            res.sendStatus(403);
-        }
-        console.log(blogDB);
+        const addLike = await Blog.updateOne({ _id: blog_id }, { $push: { likes: user_id } });
 
-        const addLikes = await Blog.updateOne(
-            { _id: blog_id },
-            { $set: { likes: blogDB.likes + Number(like) } }
-        );
-
-        res.json(addLikes);
+        res.json(addLike);
     } catch (err) {
         next(err);
     }
@@ -250,6 +238,7 @@ const getBlogsByUserId = async (req, res, next) => {
 const DonorHealthStatus = async (req, res, next) => {
     // get the status from req.body ;
     try {
+        // donor req is getting by donor that time no req done
         const donorStatus = req.body;
         console.log(donorStatus);
         const { password, ...rest } = donorStatus;
