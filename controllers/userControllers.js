@@ -12,7 +12,7 @@ const signUp = async (req, res, next) => {
     try {
         const { email, password, role } = req.body;
         console.log(role);
-        console.log(req.body, '---------------');
+        console.log(req.body, ' --------------- ');
 
         const hashPassword = await bcrypt.hash(password, 10);
         console.log(hashPassword);
@@ -308,6 +308,21 @@ const getDonorByMap = async (req, res, next) => {
     }
 };
 
+const getDonorById = async (req, res, next) => {
+    try {
+        const { id } = req.query;
+        const donorDB = await User.findById(id);
+        if (!donorDB) {
+            res.json([]);
+        } else {
+            const donorDetails = donorDB.populate('DonorHealth');
+            res.json(donorDetails);
+        }
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     signUp,
     signIn,
@@ -318,6 +333,7 @@ module.exports = {
     deleteBlog,
     getBlogsByUserId,
     DonorHealthStatus,
-    getDonorByMap
+    getDonorByMap,
+    getDonorById
 };
 // $2b$10$2hdI8KXmo670S3oHlspQOetzshfHnX7n.vjcxhxL6LWk42T2MzQUq

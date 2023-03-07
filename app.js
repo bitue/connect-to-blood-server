@@ -6,6 +6,11 @@ const { userRouter } = require('./routes/userRoutes');
 const { adminRouter } = require('./routes/adminRouter');
 const { publicRouter } = require('./routes/publicRouter');
 
+// all about file upload
+
+const multer = require('multer');
+const uploadFilePath = './uploads/';
+
 // const adminRouter = require('./routes/adminRouter');
 
 require('dotenv').config();
