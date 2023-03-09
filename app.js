@@ -10,6 +10,9 @@ const { publicRouter } = require('./routes/publicRouter');
 
 const multer = require('multer');
 const uploadFilePath = './uploads/';
+var upload = multer({
+    dest : uploadFilePath 
+})
 
 // const adminRouter = require('./routes/adminRouter');
 

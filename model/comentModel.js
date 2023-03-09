@@ -12,7 +12,7 @@ const commentSchema = new mongoose.Schema(
             ref: 'Blog',
             required: true
         },
-        email: {
+        fullName: {
             type: String
         }
     },
