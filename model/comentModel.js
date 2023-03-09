@@ -11,6 +11,9 @@ const commentSchema = new mongoose.Schema(
             type: mongoose.SchemaTypes.ObjectId,
             ref: 'Blog',
             required: true
+        },
+        fullName: {
+            type: String
         }
     },
     { timestamps: true }
