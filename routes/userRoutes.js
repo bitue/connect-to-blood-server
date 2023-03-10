@@ -39,7 +39,7 @@ userRouter.post('/donorRequest', checkAuth, checkRole('user'), DonorHealthStatus
 // user can find the blood donor convenient from his area
 // need it to be authN and authZ letter
 userRouter.post('/donorListMap', checkAuth, checkRole('user'), getDonorByMap);
-userRouter.post('/getDonorById', checkAuth, checkRole('user'), getDonorById);
+userRouter.get('/getDonorById', checkAuth, checkRole('user'), getDonorById);
 
 module.exports = {
     userRouter
