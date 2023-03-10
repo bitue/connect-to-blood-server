@@ -311,13 +311,19 @@ const getDonorByMap = async (req, res, next) => {
 const getDonorById = async (req, res, next) => {
     try {
         const { id } = req.query;
-        const donorDB = await User.findById(id);
+        console.log(id);
+        const donorDB = await User.findById(id).populate('donorHealth');
         if (!donorDB) {
-            res.json([]);
-        } else {
-            const donorDetails = donorDB.populate('DonorHealth');
-            res.json(donorDetails);
+            res.json({ msg: 'user not found' });
         }
+        res.json(donorDB);
+        // if (!donorDB) {
+        //     res.json([]);
+        // } else {
+        //     const donorDetails = await donorDB.populate('donorHealth');
+        //     console.log(donorDetails);
+        //     res.json(donorDetails);
+        // }
     } catch (err) {
         next(err);
     }
